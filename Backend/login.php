@@ -1,5 +1,6 @@
 <?php
 
+$is_invalid = false;
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -18,10 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         if (password_verify($_POST["password-login"], $user["passwords"])) {
             
-            die("Logged in");
+            session_start();
+            $_SESSION["user_id"] = $user["username"];
+            header("Location: user_login.php");
+
             exit;
         }
     }
     
     $is_invalid = true;
 }
+
